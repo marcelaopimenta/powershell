@@ -27,13 +27,16 @@ namespace PnP.PowerShell.Commands.Graph
         public int PercentComplete;
 
         [Parameter(Mandatory = false)]
-        public DateTime DueDateTime;
+        public DateTime? DueDateTime;
 
         [Parameter(Mandatory = false)]
-        public DateTime StartDateTime;
+        public DateTime? StartDateTime;
 
         [Parameter(Mandatory = false)]
         public string[] AssignedTo;
+
+        [Parameter(Mandatory = false)]
+        public PlannerTaskDetails Details;
 
         protected override void ExecuteCmdlet()
         {
@@ -59,11 +62,11 @@ namespace PnP.PowerShell.Commands.Graph
                 }
                 if (ParameterSpecified(nameof(DueDateTime)))
                 {
-                    plannerTask.DueDateTime = DueDateTime.ToUniversalTime();
+                    plannerTask.DueDateTime = DueDateTime?.ToUniversalTime();
                 }
                 if (ParameterSpecified(nameof(StartDateTime)))
                 {
-                    plannerTask.StartDateTime = StartDateTime.ToUniversalTime();
+                    plannerTask.StartDateTime = StartDateTime?.ToUniversalTime();
                 }
                 if (ParameterSpecified(nameof(AssignedTo)))
                 {
@@ -85,8 +88,6 @@ namespace PnP.PowerShell.Commands.Graph
                         }
                     }
                 }
-
-
                 PlannerUtility.UpdateTaskAsync(HttpClient, AccessToken, existingTask, plannerTask).GetAwaiter().GetResult();
             }
             else

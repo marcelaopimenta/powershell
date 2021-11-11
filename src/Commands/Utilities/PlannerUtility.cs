@@ -138,7 +138,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         newCheckListItem.Title = checklistItem.Value.Title;
                         if (checklistItem.Value.LastModifiedBy != null)
                         {
-                            newCheckListItem.LastModifiedBy = new IdentitySet();
+                            newCheckListItem.LastModifiedBy = new LastModifiedBy();
                             newCheckListItem.LastModifiedBy.User = await ResolveIdentityAsync(httpClient, accessToken, checklistItem.Value.LastModifiedBy.User);
                         }
                         newItems.Add(checklistItem.Key, newCheckListItem);
@@ -186,9 +186,14 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<PlannerTask> UpdateTaskAsync(HttpClient httpClient, string accessToken, PlannerTask taskToUpdate, PlannerTask task)
         {
-            
-            return await GraphHelper.PatchAsync<PlannerTask>(httpClient, accessToken, $"v1.0/planner/tasks/{taskToUpdate.Id}", task, new Dictionary<string, string>() { { "IF-MATCH", taskToUpdate.ETag } });
+            return await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/planner/tasks/{taskToUpdate.Id}", task, new Dictionary<string, string>() { { "IF-MATCH", taskToUpdate.ETag } });
         }
+
+        public static async Task<PlannerTaskDetails> UpdateTaskDetailAsync(HttpClient httpClient, string accessToken, PlannerTask taskToUpdate, PlannerTask task)
+        {
+            return await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/planner/tasks/{taskToUpdate.Id}/details", task.Details, new Dictionary<string, string>() { { "IF-MATCH", taskToUpdate.Details.ETag } });
+        }
+
         #endregion
 
         #region Rosters

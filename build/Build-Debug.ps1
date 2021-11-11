@@ -40,7 +40,7 @@ $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
 Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
 
-$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`"" + "--nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
+$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`"" + "--nologo --configuration Debug -p:VersionPrefix=1.8.60 -p:VersionSuffix=debug";
 if ($NoIncremental) {
 	$buildCmd += " --no-incremental";
 }
@@ -161,7 +161,7 @@ if ($LASTEXITCODE -eq 0) {
 	{
 		'Framework/PnP.PowerShell.dll'
 	}
-	ModuleVersion = '$version'
+	ModuleVersion = '1.1.2'
 	Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'

@@ -46,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                         var bucket = Bucket.GetBucket(HttpClient, AccessToken, planId);
                         if (bucket != null)
                         {
-                            PlannerUtility.AddTaskAsync(HttpClient, AccessToken, planId, bucket.Id, Title, AssignedTo).GetAwaiter().GetResult();
+                            WriteObject(PlannerUtility.AddTaskAsync(HttpClient, AccessToken, planId, bucket.Id, Title, AssignedTo).GetAwaiter().GetResult());
                         }
                         else
                         {
@@ -69,7 +69,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 var bucket = Bucket.GetBucket(HttpClient, AccessToken, PlanId);
                 if (bucket != null)
                 {
-                    PlannerUtility.AddTaskAsync(HttpClient, AccessToken, PlanId, bucket.Id, Title).GetAwaiter().GetResult();
+                    WriteObject(PlannerUtility.AddTaskAsync(HttpClient, AccessToken, PlanId, bucket.Id, Title).GetAwaiter().GetResult());
                 }
                 else
                 {
